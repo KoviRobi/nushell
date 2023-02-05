@@ -822,6 +822,10 @@ impl DeferredStyleComputation {
     }
 }
 
+/// TODO: Figure out what this is exactly, and duplication in
+/// crates/nu-explore/src/nu_common/table.rs:279 convert_to_table2
+/// crates/nu-command/src/viewers/table.rs:950 convert_to_table2 and
+/// crates/nu-command/src/viewers/table.rs:825 convert_to_table
 fn convert_to_table(
     row_offset: usize,
     input: &[Value],
@@ -945,6 +949,10 @@ fn convert_to_table(
     Ok(Some((table, with_header, with_index)))
 }
 
+/// TODO: Figure out what this is exactly, and duplication in
+/// crates/nu-explore/src/nu_common/table.rs:279 convert_to_table2
+/// crates/nu-command/src/viewers/table.rs:950 convert_to_table2 and
+/// crates/nu-command/src/viewers/table.rs:825 convert_to_table
 #[allow(clippy::too_many_arguments)]
 #[allow(clippy::into_iter_on_ref)]
 fn convert_to_table2<'a>(
@@ -1230,7 +1238,13 @@ fn convert_to_table2<'a>(
 
         let is_last_column = widths.len() == count_columns;
         if !is_last_column {
-            let shift = NuTable::create_cell(String::from("..."), TextStyle::default());
+            let suffix = match &config.trim_strategy {
+                TrimStrategy::Truncate {
+                    suffix: Some(suffix),
+                } => suffix,
+                _ => "EEE",
+            };
+            let shift = NuTable::create_cell(suffix, TextStyle::default());
             for row in &mut data {
                 row.push(shift.clone());
             }

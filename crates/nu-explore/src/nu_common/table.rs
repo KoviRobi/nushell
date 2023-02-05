@@ -276,6 +276,10 @@ fn build_expanded_table(
     Ok(table)
 }
 
+/// TODO: Figure out what this is exactly, and duplication in
+/// crates/nu-explore/src/nu_common/table.rs:279 convert_to_table2
+/// crates/nu-command/src/viewers/table.rs:950 convert_to_table2 and
+/// crates/nu-command/src/viewers/table.rs:825 convert_to_table
 #[allow(clippy::too_many_arguments)]
 #[allow(clippy::into_iter_on_ref)]
 fn convert_to_table2<'a>(
@@ -558,7 +562,7 @@ fn convert_to_table2<'a>(
             return Ok(None);
         }
 
-        let shift = NuTable::create_cell(String::from("..."), TextStyle::default());
+        let shift = NuTable::create_cell(String::from("DDD"), TextStyle::default());
         for row in &mut data {
             row.push(shift.clone());
         }

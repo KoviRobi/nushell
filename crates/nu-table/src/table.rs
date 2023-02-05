@@ -83,7 +83,7 @@ impl Table {
 
         if truncated {
             self.data.push(Table::create_cell(
-                String::from("..."),
+                String::from("AAA"),
                 TextStyle::default(),
             ));
         }
@@ -374,6 +374,7 @@ where
 
                 w.change(table)
             }
+            // TODO: Figure out where this gets called from
             TrimStrategy::Truncate { suffix } => {
                 let mut w = Width::truncate(self.termwidth).priority::<PriorityMax>();
                 if let Some(suffix) = suffix {
@@ -406,7 +407,7 @@ fn maybe_truncate_columns(data: &mut Data, theme: &TableTheme, termwidth: usize)
 fn truncate_columns_by_content(data: &mut Data, theme: &TableTheme, termwidth: usize) -> bool {
     const MIN_ACCEPTABLE_WIDTH: usize = 3;
     const TRAILING_COLUMN_WIDTH: usize = 5;
-    const TRAILING_COLUMN_STR: &str = "...";
+    const TRAILING_COLUMN_STR: &str = "BBB";
 
     let config;
     let total;
@@ -491,7 +492,7 @@ fn truncate_columns_by_content(data: &mut Data, theme: &TableTheme, termwidth: u
 fn truncate_columns_by_columns(data: &mut Data, theme: &TableTheme, termwidth: usize) -> bool {
     const ACCEPTABLE_WIDTH: usize = 10 + 2;
     const TRAILING_COLUMN_WIDTH: usize = 3 + 2;
-    const TRAILING_COLUMN_STR: &str = "...";
+    const TRAILING_COLUMN_STR: &str = "CCC";
 
     let config;
     let total;
