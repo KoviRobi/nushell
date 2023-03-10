@@ -95,6 +95,7 @@ mod semicolon;
 mod seq;
 mod seq_char;
 mod seq_date;
+mod set_metadata;
 mod skip;
 mod sort;
 mod sort_by;
